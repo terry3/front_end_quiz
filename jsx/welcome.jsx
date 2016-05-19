@@ -12,7 +12,7 @@ var ContactMe = React.createClass({
 
 var StartBtn = React.createClass({
   handleClick: function() {
-    alert(this.props.prompt);
+    this.props.clickStartBtn('section');
   },
 
   render: function() {
@@ -22,15 +22,14 @@ var StartBtn = React.createClass({
 
 var WelcomeView = React.createClass({
   render: function() {
+    if (this.props.showState !== 'welcome') {
+      return null;
+    }
     return (<div>
             <Title content="前端开发知识竞赛" />
-            <StartBtn content="开始" prompt="成功了" />
+            <StartBtn content="开始" prompt="成功了"
+            clickStartBtn={this.props.clickStartBtn}/>
             <ContactMe content="github.com/terry3" />
             </div>);
   }
 });
-
-ReactDOM.render(
-  <WelcomeView />,
-  document.getElementById('container')
-);
