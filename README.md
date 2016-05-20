@@ -1,6 +1,6 @@
 # 前端开发知识竞赛
 
-## 源自Front End Web Development Quiz: [matplotlib.org](http://matplotlib.org/).
+## 源自Front End Web Development Quiz: [http://davidshariff.com/quiz/](http://davidshariff.com/quiz/).
 
 ## React实现
 
