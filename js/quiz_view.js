@@ -21,7 +21,10 @@ var QuizView = React.createClass({
       null,
       React.createElement(WelcomeView, { showState: this.state.showState,
         clickStartBtn: this.clickStartBtn }),
-      React.createElement(SectionView, { showState: this.state.showState })
+      React.createElement(SectionView, { showState: this.state.showState,
+        readyBtnClick: this.clickStartBtn }),
+      React.createElement(QuestionView, { questions: QUESTIONS,
+        showState: this.state.showState })
     );
   }
 });

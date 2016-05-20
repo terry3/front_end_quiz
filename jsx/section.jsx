@@ -10,6 +10,16 @@ var SectionLabel = React.createClass({
   }
 });
 
+var SectionReadyBtn = React.createClass({
+  clickHandler: function() {
+    this.props.clickHandler('question css');
+  },
+
+  render: function() {
+    return (<button onClick={this.clickHandler}>{this.props.content}</button>);
+  }
+});
+
 var SectionView = React.createClass({
   render: function() {
     if (this.props.showState !== 'section') {
@@ -18,6 +28,7 @@ var SectionView = React.createClass({
     return (<div>
             <SectionTitle current="1" all="3" />
             <SectionLabel sectionLabel="CSS" />
+            <SectionReadyBtn content="我准备好了" clickHandler={this.props.readyBtnClick} />
            </div>);
   }
 });
