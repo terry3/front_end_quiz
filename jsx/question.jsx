@@ -22,13 +22,20 @@ var QuestionDesc = React.createClass({
   }
 });
 
+var QuestionChoiceBtn = React.createClass({
+  render: function() {
+    return (<button value={this.props.value}>{this.props.content}</button>);
+  }
+});
+
 var QuestionChoice = React.createClass({
   render: function() {
     var buttons = [];
     this.props.questionChoice.forEach(function(item) {
-      buttons.push(<button value={item.value}>{item.content}</button>);
+      buttons.push(<QuestionChoiceBtn key={item.value} value={item.value}
+                   content={item.content}/>);
     });
-    buttons.push(<button value="skip">跳过</button>);
+    buttons.push(<QuestionChoiceBtn key="skip" value="skip" content="跳过" />);
     return (<div>{buttons}</div>);
   }
 });
