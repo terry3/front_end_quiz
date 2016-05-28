@@ -59,7 +59,8 @@ var QuestionView = React.createClass({
             <QuestionLabel questionType={questionType}/>
             <QuestionCode questionCode={this.props.questions.questionCode} />
             <QuestionDesc questionDesc={this.props.questions.questionDesc} />
-            <QuestionChoice questionChoice={this.props.questions.questionChoice} />
+            <QuestionChoice questionChoice=
+            {this.props.questions.questionChoice} />
             </div>);
   }
 });
