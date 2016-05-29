@@ -1,3 +1,9 @@
+var React = require('react');
+var WelcomeView = require('./welcomeView.react');
+var SectionView = require('./sectionView.react');
+var QuestionView = require('./questionView.react');
+var QUESTIONS = require('../data');
+
 var QuizView = React.createClass({
   getInitialState: function() {
     return {
@@ -23,7 +29,4 @@ var QuizView = React.createClass({
   }
 });
 
-ReactDOM.render(
-  <QuizView />,
-  document.getElementById('container')
-);
+module.exports = QuizView;

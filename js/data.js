@@ -10,3 +10,4 @@ var QUESTIONS =
             value: 'true',
             content: '否'}]
       };
+module.exports = QUESTIONS;
