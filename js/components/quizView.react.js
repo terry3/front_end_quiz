@@ -3,18 +3,33 @@ var WelcomeView = require('./welcomeView.react');
 var SectionView = require('./sectionView.react');
 var QuestionView = require('./questionView.react');
 var QUESTIONS = require('../data');
+var FeqStore = require('../stores/FeqStore');
+
+function getFeqState() {
+  console.log(FeqStore.getShowState());
+  console.log(FeqStore.getQuestionNUm());
+  return {
+    showState: FeqStore.getShowState(),
+    questionNum: FeqStore.getQuestionNUm()
+  };
+}
+
 
 var QuizView = React.createClass({
   getInitialState: function() {
-    return {
-      showState: 'welcome'
-    };
+    return getFeqState();
   },
 
-  clickStartBtn: function(view) {
-    this.setState({
-      showState: view
-    });
+  componentDidMount: function() {
+    FeqStore.addChangeListener(this._onChange);
+  },
+
+  componentWillUnmount: function() {
+    FeqStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState(getFeqState());
   },
 
   render: function() {
@@ -24,7 +39,8 @@ var QuizView = React.createClass({
             <SectionView showState={this.state.showState}
             readyBtnClick={this.clickStartBtn}/>
             <QuestionView questions={QUESTIONS}
-            showState={this.state.showState}/>
+            showState={this.state.showState}
+            questionNum={this.state.questionNum}/>
             </div>);
   }
 });

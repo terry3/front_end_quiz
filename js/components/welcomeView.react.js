@@ -1,8 +1,9 @@
 var React = require('react');
+var FeqActions = require('../actions/FeqActions');
 
 var WelcomeView = React.createClass({
   _onClick: function() {
-    this.props.clickStartBtn('section');
+    FeqActions.showState('section');
   },
 
   render: function() {

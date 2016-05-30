@@ -1,4 +1,5 @@
 var React = require('react');
+var FeqActions = require('../actions/FeqActions');
 
 var SectionView = React.createClass({
   getInitialState: function() {
@@ -10,7 +11,7 @@ var SectionView = React.createClass({
   },
 
   _onClick: function() {
-    this.props.readyBtnClick('question css');
+    FeqActions.showState('question css');
   },
 
   render: function() {
