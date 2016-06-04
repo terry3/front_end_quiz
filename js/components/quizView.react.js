@@ -2,6 +2,7 @@ var React = require('react');
 var WelcomeView = require('./welcomeView.react');
 var SectionView = require('./sectionView.react');
 var QuestionView = require('./questionView.react');
+var FinalView = require('./finalView.react');
 var QUESTIONS = require('../data');
 var FeqStore = require('../stores/FeqStore');
 
@@ -42,10 +43,11 @@ var QuizView = React.createClass({
             clickStartBtn={this.clickStartBtn}/>
             <SectionView showState={this.state.showState}
             readyBtnClick={this.clickStartBtn}
-            totalViewNum={FeqStore.getTotalSectionViewNum()}/>
+            totalViewNum={FeqStore.getTotalSectionViewNum()} />
             <QuestionView questions={QUESTIONS}
             showState={this.state.showState}
             questionState={this.state.question}/>
+            <FinalView showState={this.state.showState} />
             </div>);
   }
 });

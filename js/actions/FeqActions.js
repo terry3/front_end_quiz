@@ -9,9 +9,10 @@ var FeqActions = {
     });
   },
 
-  nextQuesion: function() {
+  nextQuesion: function(currentResult) {
     AppDispatcher.dispatch({
-      actionType: FeqConstants.FEQ_NEXT_QUESTION
+      actionType: FeqConstants.FEQ_NEXT_QUESTION,
+      currentResult: currentResult
     });
   },
   nextSection: function() {

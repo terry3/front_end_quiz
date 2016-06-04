@@ -4,16 +4,14 @@ var FeqActions = require('../actions/FeqActions');
 
 var QuestionView = React.createClass({
   _onClick: function(evt) {
-    console.log(evt.target.value);
-    FeqActions.nextQuesion();
+    FeqActions.nextQuesion(evt.target.value);
   },
 
   render: function() {
-    var viewType = this.props.showState.split(' ')[0];
     var self = this;
     var code = '';
     var totalNumbers = FeqStore.getQuestionTypeSize();
-    if (viewType !== 'question') {
+    if (this.props.showState !== 'question') {
       return null;
     }
 

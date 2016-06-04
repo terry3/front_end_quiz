@@ -11,6 +11,8 @@ var _number = 0;
 var _currentTypeNumber = 0;
 var _section = 'css';
 var _sectionArr = [];
+var _scores = 0;
+
 (function(){
   QUESTIONS.forEach(function(item) {
     var tmpIndex = -1;
@@ -57,9 +59,6 @@ function nextSection() {
   if (tmp === null) {
     return null;
   }
-  console.log('tmp' + tmp);
-  console.log('_sectionArr' + _sectionArr);
-  console.log('_section' + _section);
 
   if (tmp === _sectionArr.length - 1) {
     // TODO: finish the quiz.
@@ -112,7 +111,7 @@ var FeqStore = assign({}, EventEmitter.prototype, {
   getCurrentSectionNum: function() {
     var tmp = 0;
     for (var i = 0; i < _sectionArr.length; i++) {
-      if (_section === _section[i].type) {
+      if (_section === _sectionArr[i].type) {
         tmp = i;
         break;
       }
@@ -122,6 +121,10 @@ var FeqStore = assign({}, EventEmitter.prototype, {
 
   getTotalSectionViewNum: function() {
     return _sectionArr.length;
+  },
+
+  getQuestionScores: function() {
+    return _scores;
   },
 
   emitChange: function() {
@@ -142,14 +145,21 @@ AppDispatcher.register(function(action) {
 
   switch(action.actionType) {
     case FeqConstants.FEQ_NEXT_QUESTION:
+      if (action.currentResult === 'true') {
+        _scores += 5;
+      }
       var result = findNextQuestion(_number);
-      console.log('result:' + result);
       if (result !== null) {
         _number = result;
         _currentTypeNumber++;
       } else {
-        _showState = 'section';
         _section = nextSection();
+        if (null === _section) {
+          // no any more questions.
+          _showState = 'final';
+          break;
+        }
+        _showState = 'section';
         _number = findNextQuestion(_number);
         _currentTypeNumber = 0;
       }
