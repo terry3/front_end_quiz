@@ -1,6 +1,6 @@
 var QUESTIONS =
       [{
-        questionCode: 'ul { MaRGin: 10px; }',
+        questionCode: 'ul\n{ \nMaRGin: 10px;\n}',
         questionDesc: 'CSS中的属性是大小写敏感的吗？',
         questionConfig: 'hascode',
         questionType: 'css',

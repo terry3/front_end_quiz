@@ -37,7 +37,7 @@ var FinalView = React.createClass({
     }
 
     return (<div>
-            <div>Scores:{this.state.result.scores}</div>
+            <h1>得分:{this.state.result.scores}</h1>
             </div>);
   }
 });

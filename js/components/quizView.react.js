@@ -7,8 +7,6 @@ var QUESTIONS = require('../data');
 var FeqStore = require('../stores/FeqStore');
 
 function getFeqState() {
-  console.log(FeqStore.getShowState());
-  console.log(FeqStore.getQuestionNum());
   return {
     showState: FeqStore.getShowState(),
     question: {
@@ -38,7 +36,7 @@ var QuizView = React.createClass({
   },
 
   render: function() {
-    return (<div>
+    return (<div id="quizView">
             <WelcomeView showState={this.state.showState}
             clickStartBtn={this.clickStartBtn}/>
             <SectionView showState={this.state.showState}

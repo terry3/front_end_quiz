@@ -12,8 +12,8 @@ var WelcomeView = React.createClass({
     }
     return (<div>
             <h1>前端开发知识竞赛</h1>
-            <button onClick={this._onClick}>开始</button>
-            <div>github.com/terry3</div>
+            <button className="btn btn-ready"
+                    onClick={this._onClick}>开始</button>
             </div>);
   }
 });

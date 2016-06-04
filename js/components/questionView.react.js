@@ -17,25 +17,25 @@ var QuestionView = React.createClass({
 
     var choiceButtons = [];
     this.props.questions[this.props.questionState.questionNum].questionChoice.forEach(function(item) {
-      choiceButtons.push(<button onClick={self._onClick}
+      choiceButtons.push(<button className="btn" onClick={self._onClick}
                          key={item.value}
                          value={item.value}>
                          {item.content}</button>);
     });
 
-    choiceButtons.push(<button onClick={this._onClick}
+    choiceButtons.push(<button className="btn btn-skip" onClick={this._onClick}
                        key="skip" value="skip">跳过</button>);
     if (this.props
         .questions[this.props.questionState.questionNum]
         .questionConfig === 'hascode') {
-      code = (<div>{this.props.questions[this.props.questionState.questionNum].questionCode}:</div>);
+      code = (<div>{this.props.questions[this.props.questionState.questionNum].questionCode}</div>);
     }
 
     var questionType = this.props.questionState.questionType;
     return (<div>
             <h1>问题{this.props.questionState.currentTypeNum + 1}/{totalNumbers}</h1>
             <h2>{questionType}:</h2>
-            <div>{code}</div>
+            <pre className="prettyprint linenums no_center">{code}</pre>
             <div>{this.props.questions[this.props.questionState.questionNum].questionDesc}</div>
             <div>{choiceButtons}</div>
             </div>);

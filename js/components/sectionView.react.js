@@ -38,7 +38,8 @@ var SectionView = React.createClass({
             <h1>第{this.state.currentSectionNum}/{this.props.totalViewNum}
             战</h1>
             <h2>{this.state.viewType}</h2>
-            <button onClick={this._onClick}>我准备好了</button>
+            <button className="btn btn-ready"
+                    onClick={this._onClick}>我准备好了</button>
            </div>);
   }
 });
