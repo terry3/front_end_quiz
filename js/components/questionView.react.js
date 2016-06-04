@@ -1,4 +1,5 @@
 var React = require('react');
+var FeqStore = require('../stores/FeqStore');
 var FeqActions = require('../actions/FeqActions');
 
 var QuestionView = React.createClass({
@@ -11,7 +12,7 @@ var QuestionView = React.createClass({
     var viewType = this.props.showState.split(' ')[0];
     var self = this;
     var code = '';
-    var totalNumbers = 20;
+    var totalNumbers = FeqStore.getQuestionTypeSize();
     if (viewType !== 'question') {
       return null;
     }
@@ -34,7 +35,7 @@ var QuestionView = React.createClass({
 
     var questionType = this.props.questionState.questionType;
     return (<div>
-            <h1>问题{this.props.questionState.questionNum + 1}/{totalNumbers}</h1>
+            <h1>问题{this.props.questionState.currentTypeNum + 1}/{totalNumbers}</h1>
             <h2>{questionType}:</h2>
             <div>{code}</div>
             <div>{this.props.questions[this.props.questionState.questionNum].questionDesc}</div>

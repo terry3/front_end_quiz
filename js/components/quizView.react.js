@@ -12,6 +12,7 @@ function getFeqState() {
     showState: FeqStore.getShowState(),
     question: {
       questionNum: FeqStore.getQuestionNum(),
+      currentTypeNum: FeqStore.getQuestionCurrentTypeNum(),
       questionType: FeqStore.getQuestionType(),
       questionSize: FeqStore.getQuestionSize(this.questionType)
     }

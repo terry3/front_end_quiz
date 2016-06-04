@@ -8,12 +8,25 @@ var QUESTIONS = require('../data.js');
 // states
 var _showState = 'welcome';
 var _number = 0;
+var _currentTypeNumber = 0;
 var _section = 'css';
 var _sectionArr = [];
 (function(){
   QUESTIONS.forEach(function(item) {
-    if (_sectionArr.indexOf(item.questionType) === -1) {
-      _sectionArr.push(item.questionType);
+    var tmpIndex = -1;
+    for (var i = 0; i < _sectionArr.length; i++) {
+      if (item.questionType === _sectionArr[i].type) {
+        tmpIndex = i;
+        break;
+      }
+    }
+    if (tmpIndex === -1) {
+      _sectionArr.push({
+        type: item.questionType,
+        number: 1
+      });
+    } else {
+      _sectionArr[tmpIndex].number++;
     }
   });
 })();
@@ -36,7 +49,7 @@ function findNextQuestion(currentIndex) {
 function nextSection() {
   var tmp = null;
   for (var i = 0; i < _sectionArr.length; i++) {
-    if (_section === _sectionArr[i]) {
+    if (_section === _sectionArr[i].type) {
       tmp = i;
     }
   }
@@ -47,12 +60,12 @@ function nextSection() {
   console.log('tmp' + tmp);
   console.log('_sectionArr' + _sectionArr);
   console.log('_section' + _section);
-  
+
   if (tmp === _sectionArr.length - 1) {
     // TODO: finish the quiz.
     return null;
   }
-  return _sectionArr[tmp + 1];
+  return _sectionArr[tmp + 1].type;
 }
 
 var FeqStore = assign({}, EventEmitter.prototype, {
@@ -63,6 +76,19 @@ var FeqStore = assign({}, EventEmitter.prototype, {
 
   getQuestionNum: function() {
     return _number;
+  },
+
+  getQuestionTypeSize: function() {
+    for (var i = 0; i < _sectionArr.length; i++) {
+      if (_sectionArr[i].type === _section) {
+        return _sectionArr[i].number;
+      }
+    }
+    return 0;
+  },
+
+  getQuestionCurrentTypeNum: function() {
+    return _currentTypeNumber;
   },
 
   getQuestionType: function() {
@@ -84,8 +110,13 @@ var FeqStore = assign({}, EventEmitter.prototype, {
   },
 
   getCurrentSectionNum: function() {
-    var tmp = _sectionArr.indexOf(_section);
-    console.log('section:' + ' ' + tmp);
+    var tmp = 0;
+    for (var i = 0; i < _sectionArr.length; i++) {
+      if (_section === _section[i].type) {
+        tmp = i;
+        break;
+      }
+    }
     return tmp + 1;
   },
 
@@ -115,10 +146,12 @@ AppDispatcher.register(function(action) {
       console.log('result:' + result);
       if (result !== null) {
         _number = result;
+        _currentTypeNumber++;
       } else {
         _showState = 'section';
         _section = nextSection();
         _number = findNextQuestion(_number);
+        _currentTypeNumber = 0;
       }
       break;
     case FeqConstants.FEQ_SHOW_STATE:
