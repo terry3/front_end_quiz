@@ -2,10 +2,20 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var FeqConstants = require('../constants/FeqConstants');
 var assign = require('object-assign');
-var  _showState = 'welcome';
+var QUESTIONS = require('../data.js');
+
+// states
+var _showState = 'welcome';
 var _number = 0;
-
-
+var _section = 'css';
+var _sectionArr = [];
+(function(){
+  QUESTIONS.forEach(function(item) {
+    if (_sectionArr.indexOf(item.questionType) === -1) {
+      _sectionArr.push(item.questionType);
+    }
+  });
+})();
 
 var FeqStore = assign({}, EventEmitter.prototype, {
 
@@ -13,8 +23,36 @@ var FeqStore = assign({}, EventEmitter.prototype, {
     return _showState;
   },
 
-  getQuestionNUm: function() {
+  getQuestionNum: function() {
     return _number;
+  },
+
+  getQuestionType: function() {
+    return QUESTIONS[_number].questionType;
+  },
+
+  getQuestionSize: function(type) {
+    var number = 0;
+    QUESTIONS.forEach(function(item) {
+      if (item.questionType === QUESTIONS[_number].questionType) {
+        number++;
+      }
+    });
+    return number;
+  },
+
+  getSection: function() {
+    return _section;
+  },
+
+  getCurrentSectionNum: function() {
+    var tmp = _sectionArr.indexOf(_section);
+    console.log('section:' + ' ' + tmp);
+    return tmp + 1;
+  },
+
+  getTotalSectionViewNum: function() {
+    return _sectionArr.length;
   },
 
   emitChange: function() {
@@ -36,14 +74,24 @@ AppDispatcher.register(function(action) {
   switch(action.actionType) {
     case FeqConstants.FEQ_NEXT_QUESTION:
       _number += 1;
-      FeqStore.emitChange();
       break;
     case FeqConstants.FEQ_SHOW_STATE:
       _showState = action.show;
-      FeqStore.emitChange();
+      break;
+    case FeqConstants.FEQ_NEXT_SECTION:
+      var tmp = _sectionArr.indexOf(action.section);
+      if (-1 === tmp) {
+        return;
+      }
+      if (tmp === _sectionArr.length - 1) {
+        // TODO: finish the quiz.
+        return;
+      }
+      _section = _sectionArr[_sectionArr[tmp + 1]];
       break;
     default:
   }
+  FeqStore.emitChange();
 });
 
 module.exports = FeqStore;

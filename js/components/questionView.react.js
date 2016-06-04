@@ -17,7 +17,7 @@ var QuestionView = React.createClass({
     }
 
     var choiceButtons = [];
-    this.props.questions[this.props.questionNum].questionChoice.forEach(function(item) {
+    this.props.questions[this.props.questionState.questionNum].questionChoice.forEach(function(item) {
       choiceButtons.push(<button onClick={self._onClick}
                          key={item.value}
                          value={item.value}>
@@ -26,17 +26,18 @@ var QuestionView = React.createClass({
 
     choiceButtons.push(<button onClick={this._onClick}
                        key="skip" value="skip">跳过</button>);
-    if (this.props.questions[this.props.questionNum].questionConfig
-        === 'hascode') {
-      code = (<div>{this.props.questions[this.props.questionNum].questionCode}:</div>);
+    if (this.props
+        .questions[this.props.questionState.questionNum]
+        .questionConfig === 'hascode') {
+      code = (<div>{this.props.questions[this.props.questionState.questionNum].questionCode}:</div>);
     }
 
-    var questionType = this.props.showState.split(' ')[1];
+    var questionType = this.props.questionState.questionType;
     return (<div>
-            <h1>问题{this.props.questionNum + 1}/{totalNumbers}</h1>
+            <h1>问题{this.props.questionState.questionNum + 1}/{totalNumbers}</h1>
             <h2>{questionType}:</h2>
             <div>{code}</div>
-            <div>{this.props.questions[this.props.questionNum].questionDesc}</div>
+            <div>{this.props.questions[this.props.questionState.questionNum].questionDesc}</div>
             <div>{choiceButtons}</div>
             </div>);
   }

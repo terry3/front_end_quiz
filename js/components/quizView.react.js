@@ -7,13 +7,16 @@ var FeqStore = require('../stores/FeqStore');
 
 function getFeqState() {
   console.log(FeqStore.getShowState());
-  console.log(FeqStore.getQuestionNUm());
+  console.log(FeqStore.getQuestionNum());
   return {
     showState: FeqStore.getShowState(),
-    questionNum: FeqStore.getQuestionNUm()
+    question: {
+      questionNum: FeqStore.getQuestionNum(),
+      questionType: FeqStore.getQuestionType(),
+      questionSize: FeqStore.getQuestionSize(this.questionType)
+    }
   };
 }
-
 
 var QuizView = React.createClass({
   getInitialState: function() {
@@ -37,10 +40,11 @@ var QuizView = React.createClass({
             <WelcomeView showState={this.state.showState}
             clickStartBtn={this.clickStartBtn}/>
             <SectionView showState={this.state.showState}
-            readyBtnClick={this.clickStartBtn}/>
+            readyBtnClick={this.clickStartBtn}
+            totalViewNum={FeqStore.getTotalSectionViewNum()}/>
             <QuestionView questions={QUESTIONS}
             showState={this.state.showState}
-            questionNum={this.state.questionNum}/>
+            questionState={this.state.question}/>
             </div>);
   }
 });

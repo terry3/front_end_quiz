@@ -3,6 +3,7 @@ var QUESTIONS =
         questionCode: 'ul { MaRGin: 10px; }',
         questionDesc: 'CSS中的属性是大小写敏感的吗？',
         questionConfig: 'hascode',
+        questionType: 'css',
         questionChoice: [
           {
             value: 'false',
@@ -15,6 +16,7 @@ var QUESTIONS =
          questionCode: '',
          questionDesc: 'margin-top与margin-bottom对行内元素有效吗？',
          questionConfig: 'nocode',
+         questionType: 'css',
          questionChoice: [
            {
              value: 'false',

@@ -13,7 +13,13 @@ var FeqActions = {
     AppDispatcher.dispatch({
       actionType: FeqConstants.FEQ_NEXT_QUESTION
     });
+  },
+  nextSection: function() {
+    AppDispatcher.dispatch({
+      actionType: FeqConstants.FEQ_NEXT_SECTION
+    });
   }
+
 };
 
 module.exports = FeqActions;
