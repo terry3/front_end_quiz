@@ -24,5 +24,18 @@ var QUESTIONS =
            {
              value: 'true',
              content: '没用'}]
+       },
+      {
+         questionCode: '',
+         questionDesc: 'window.onload与document.onload是否一样？',
+         questionConfig: 'nocode',
+         questionType: 'javascript',
+         questionChoice: [
+           {
+             value: 'false',
+             content: '一样'},
+           {
+             value: 'true',
+             content: '不一样'}]
        }];
 module.exports = QUESTIONS;

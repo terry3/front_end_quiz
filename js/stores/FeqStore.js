@@ -2,6 +2,7 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 var FeqConstants = require('../constants/FeqConstants');
 var assign = require('object-assign');
+var FeqActions = require('../actions/FeqActions');
 var QUESTIONS = require('../data.js');
 
 // states
@@ -16,6 +17,43 @@ var _sectionArr = [];
     }
   });
 })();
+
+function findNextQuestion(currentIndex) {
+  var type = _section;
+  var i = currentIndex + 1;
+  if (type !== QUESTIONS[currentIndex].questionType) {
+    // from the begin to find the right question type.
+    i = 0;
+  }
+  for (; i < QUESTIONS.length; i++) {
+    if (QUESTIONS[i].questionType === type) {
+      return i;
+    }
+  }
+  return null;
+}
+
+function nextSection() {
+  var tmp = null;
+  for (var i = 0; i < _sectionArr.length; i++) {
+    if (_section === _sectionArr[i]) {
+      tmp = i;
+    }
+  }
+
+  if (tmp === null) {
+    return null;
+  }
+  console.log('tmp' + tmp);
+  console.log('_sectionArr' + _sectionArr);
+  console.log('_section' + _section);
+  
+  if (tmp === _sectionArr.length - 1) {
+    // TODO: finish the quiz.
+    return null;
+  }
+  return _sectionArr[tmp + 1];
+}
 
 var FeqStore = assign({}, EventEmitter.prototype, {
 
@@ -73,21 +111,21 @@ AppDispatcher.register(function(action) {
 
   switch(action.actionType) {
     case FeqConstants.FEQ_NEXT_QUESTION:
-      _number += 1;
+      var result = findNextQuestion(_number);
+      console.log('result:' + result);
+      if (result !== null) {
+        _number = result;
+      } else {
+        _showState = 'section';
+        _section = nextSection();
+        _number = findNextQuestion(_number);
+      }
       break;
     case FeqConstants.FEQ_SHOW_STATE:
       _showState = action.show;
       break;
     case FeqConstants.FEQ_NEXT_SECTION:
-      var tmp = _sectionArr.indexOf(action.section);
-      if (-1 === tmp) {
-        return;
-      }
-      if (tmp === _sectionArr.length - 1) {
-        // TODO: finish the quiz.
-        return;
-      }
-      _section = _sectionArr[_sectionArr[tmp + 1]];
+      _section = nextSection();
       break;
     default:
   }
