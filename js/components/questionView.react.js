@@ -7,6 +7,11 @@ var QuestionView = React.createClass({
     FeqActions.nextQuesion(evt.target.value);
   },
 
+  componentDidUpdate: function() {
+    // hilight code in html.
+    Prism.highlightAll();
+  },
+
   render: function() {
     var self = this;
     var code = '';
@@ -15,6 +20,7 @@ var QuestionView = React.createClass({
       return null;
     }
 
+    var questionType = this.props.questionState.questionType;
     var choiceButtons = [];
     this.props.questions[this.props.questionState.questionNum].questionChoice.forEach(function(item) {
       choiceButtons.push(<button className="btn" onClick={self._onClick}
@@ -28,14 +34,23 @@ var QuestionView = React.createClass({
     if (this.props
         .questions[this.props.questionState.questionNum]
         .questionConfig === 'hascode') {
-      code = (<div>{this.props.questions[this.props.questionState.questionNum].questionCode}</div>);
-    }
+      var formatCode = '';
+      var classType = '';
+      var originCode = this.props.
+            questions[this.props.questionState.questionNum].questionCode;
 
-    var questionType = this.props.questionState.questionType;
+      if (questionType === 'css') {
+        classType = 'language-css';
+      } else if (questionType === 'javascript') {
+        classType = 'language-javascript';
+      }
+      code = (<div id="code"><pre><code className={classType}>
+              {originCode}</code></pre></div>);
+    }
     return (<div>
             <h1>问题{this.props.questionState.currentTypeNum + 1}/{totalNumbers}</h1>
             <h2>{questionType}:</h2>
-            <pre className="prettyprint linenums no_center">{code}</pre>
+            {code}
             <div>{this.props.questions[this.props.questionState.questionNum].questionDesc}</div>
             <div>{choiceButtons}</div>
             </div>);

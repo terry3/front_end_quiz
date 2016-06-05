@@ -10,7 +10,7 @@
     "keymirror": "~0.1.0",
     "object-assign": "^1.0.0",
     "react": "^0.12.0",
-    "prismjs" : ""
+    "prismjs": ""
   },
   "devDependencies": {
     "browserify": "^6.2.0",

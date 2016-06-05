@@ -24,6 +24,9 @@ body {
   display: inline;
 }
 
+#code {
+}
+
 #footer {
   margin: 2rem 0 0 0;
   text-align: center;
@@ -101,6 +104,6 @@ body {
   color: #ffffff;
 }
 
-.no_center {
+.no-center {
   text-align: left !important;
 }
