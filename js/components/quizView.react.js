@@ -13,7 +13,7 @@ function getFeqState() {
       questionNum: FeqStore.getQuestionNum(),
       currentTypeNum: FeqStore.getQuestionCurrentTypeNum(),
       questionType: FeqStore.getQuestionType(),
-      questionSize: FeqStore.getQuestionSize(this.questionType)
+      questionSize: FeqStore.getQuestionSize(FeqStore.getQuestionType())
     }
   };
 }

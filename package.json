@@ -13,17 +13,16 @@
     "prismjs": ""
   },
   "devDependencies": {
-    "browserify": "^6.2.0",
-    "envify": "^3.0.0",
-    "jest-cli": "^0.4.3",
-    "reactify": "^0.15.2",
-    "uglify-js": "~2.4.15",
-    "watchify": "^2.1.1"
+    "webpack": "latest",
+    "babel-core": "^6.11.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-loader": "^6.2.4"
   },
   "scripts": {
-    "start": "watchify -o js/bundle.js -v -d js/app.js",
-    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > js/bundle.min.js",
-    "test": "jest"
+    "dev": "webpack -d -w",
+    "start": "webpack -p",
+    "build": "webpack"
   },
   "author": "terry3",
   "browserify": {
