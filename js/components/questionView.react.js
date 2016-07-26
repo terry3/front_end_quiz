@@ -1,18 +1,18 @@
-var React = require('react');
-var FeqStore = require('../stores/FeqStore');
-var FeqActions = require('../actions/FeqActions');
+import React from 'react';
+import { FeqStore } from '../stores/FeqStore';
+import { FeqActions } from '../actions/FeqActions';
 
-var QuestionView = React.createClass({
-  _onClick: function(evt) {
+export default class QuestionView extends React.Component {
+  _onClick(evt) {
     FeqActions.nextQuesion(evt.target.value);
-  },
+  }
 
-  componentDidUpdate: function() {
+  componentDidUpdate() {
     // hilight code in html.
     Prism.highlightAll();
-  },
+  }
 
-  render: function() {
+  render() {
     var self = this;
     var code = '';
     var totalNumbers = FeqStore.getQuestionTypeSize();
@@ -55,6 +55,4 @@ var QuestionView = React.createClass({
             <div>{choiceButtons}</div>
             </div>);
   }
-});
-
-module.exports = QuestionView;
+};

@@ -1,36 +1,37 @@
-var React = require('react');
-var FeqActions = require('../actions/FeqActions');
-var FeqStore = require('../stores/FeqStore');
+import React from 'react';
+import { FeqActions } from '../actions/FeqActions';
+import { FeqStore } from '../stores/FeqStore';
 
-function getFeqSectionState() {
-  return {
-    viewType: FeqStore.getSection(),
-    currentSectionNum: FeqStore.getCurrentSectionNum()
-  };
-}
+export default class SectionView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.getFeqSectionState();
+  }
 
-var SectionView = React.createClass({
-  getInitialState: function() {
-    return getFeqSectionState();
-  },
+  getFeqSectionState() {
+    return {
+      viewType: FeqStore.getSection(),
+      currentSectionNum: FeqStore.getCurrentSectionNum()
+    };
+  }
 
-  componentDidMount: function() {
-    FeqStore.addChangeListener(this._onChange);
-  },
+  componentDidMount() {
+    FeqStore.addChangeListener(this._onChange.bind(this));
+  }
 
-  componentWillUnmount: function() {
-    FeqStore.removeChangeListener(this._onChange);
-  },
+  componentWillUnmount() {
+    FeqStore.removeChangeListener(this._onChange.bind(this));
+  }
 
-  _onClick: function() {
+  _onClick() {
     FeqActions.showState('question');
-  },
+  }
 
-  _onChange: function() {
-    this.setState(getFeqSectionState());
-  },
+  _onChange() {
+    this.setState(this.getFeqSectionState());
+  }
 
-  render: function() {
+  render() {
     if (this.props.showState !== 'section') {
       return null;
     }
@@ -39,9 +40,7 @@ var SectionView = React.createClass({
             战</h1>
             <h2>{this.state.viewType}</h2>
             <button className="btn btn-ready"
-                    onClick={this._onClick}>我准备好了</button>
+                    onClick={this._onClick.bind(this)}>我准备好了</button>
            </div>);
   }
-});
-
-module.exports = SectionView;
+};

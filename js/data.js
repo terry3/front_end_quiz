@@ -1,4 +1,4 @@
-var QUESTIONS =
+const QUESTIONS =
       [{
         questionCode: 'ul { \n  MaRGin: 10px;\n}',
         questionDesc: 'CSS中的属性是大小写敏感的吗？',
@@ -38,4 +38,5 @@ var QUESTIONS =
              value: 'true',
              content: '不一样'}]
        }];
-module.exports = QUESTIONS;
+
+export default QUESTIONS;

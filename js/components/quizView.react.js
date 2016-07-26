@@ -1,41 +1,42 @@
-var React = require('react');
-var WelcomeView = require('./welcomeView.react');
-var SectionView = require('./sectionView.react');
-var QuestionView = require('./questionView.react');
-var FinalView = require('./finalView.react');
-var QUESTIONS = require('../data');
-var FeqStore = require('../stores/FeqStore');
+import React from 'react';
+import WelcomeView from './welcomeView.react';
+import SectionView from './sectionView.react';
+import QuestionView from './questionView.react';
+import FinalView from './finalView.react';
+import QUESTIONS from '../data';
+import { FeqStore } from '../stores/FeqStore';
 
-function getFeqState() {
-  return {
-    showState: FeqStore.getShowState(),
-    question: {
-      questionNum: FeqStore.getQuestionNum(),
-      currentTypeNum: FeqStore.getQuestionCurrentTypeNum(),
-      questionType: FeqStore.getQuestionType(),
-      questionSize: FeqStore.getQuestionSize(FeqStore.getQuestionType())
-    }
-  };
-}
+export default class QuizView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.getFeqState();
+  }
 
-var QuizView = React.createClass({
-  getInitialState: function() {
-    return getFeqState();
-  },
+  getFeqState() {
+    return {
+      showState: FeqStore.getShowState(),
+      question: {
+        questionNum: FeqStore.getQuestionNum(),
+        currentTypeNum: FeqStore.getQuestionCurrentTypeNum(),
+        questionType: FeqStore.getQuestionType(),
+        questionSize: FeqStore.getQuestionSize(FeqStore.getQuestionType())
+      }
+    };
+  }
 
-  componentDidMount: function() {
-    FeqStore.addChangeListener(this._onChange);
-  },
+  componentDidMount() {
+    FeqStore.addChangeListener(this._onChange.bind(this));
+  }
 
-  componentWillUnmount: function() {
-    FeqStore.removeChangeListener(this._onChange);
-  },
+  componentWillUnmount() {
+    FeqStore.removeChangeListener(this._onChange.bind(this));
+  }
 
-  _onChange: function() {
-    this.setState(getFeqState());
-  },
+  _onChange() {
+    this.setState(this.getFeqState());
+  }
 
-  render: function() {
+  render() {
     return (<div id="quizView">
             <WelcomeView showState={this.state.showState}
             clickStartBtn={this.clickStartBtn}/>
@@ -48,6 +49,4 @@ var QuizView = React.createClass({
             <FinalView showState={this.state.showState} />
             </div>);
   }
-});
-
-module.exports = QuizView;
+}

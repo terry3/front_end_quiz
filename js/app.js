@@ -1,8 +1,8 @@
-var React = require('react');
+import React from 'react'
+import ReactDOM from 'react-dom';
+import QuizView from './components/quizView.react';
 
-var QuizView = require('./components/quizView.react');
-
-React.render(
+ReactDOM.render(
   <QuizView />,
   document.getElementById('container')
 );

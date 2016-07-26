@@ -1,26 +1,30 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var FeqConstants = require('../constants/FeqConstants');
+import { AppDispatcher } from '../dispatcher/AppDispatcher';
+import { FeqConstants } from '../constants/FeqConstants';
 
-var FeqActions = {
-  showState: function(show) {
+class FeqActionsClass {
+  constructor() {
+    console.log('guotengfei');
+  }
+
+  showState(show) {
     AppDispatcher.dispatch({
       actionType: FeqConstants.FEQ_SHOW_STATE,
       show: show
     });
-  },
+  }
 
-  nextQuesion: function(currentResult) {
+  nextQuesion(currentResult) {
     AppDispatcher.dispatch({
       actionType: FeqConstants.FEQ_NEXT_QUESTION,
       currentResult: currentResult
     });
-  },
-  nextSection: function() {
+  }
+
+  nextSection() {
     AppDispatcher.dispatch({
       actionType: FeqConstants.FEQ_NEXT_SECTION
     });
   }
+}
 
-};
-
-module.exports = FeqActions;
+export const FeqActions = new FeqActionsClass();

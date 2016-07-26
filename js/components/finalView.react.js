@@ -1,37 +1,39 @@
-var React = require('react');
-var WelcomeView = require('./welcomeView.react');
-var SectionView = require('./sectionView.react');
-var QuestionView = require('./questionView.react');
-var QUESTIONS = require('../data');
-var FeqStore = require('../stores/FeqStore');
+import React from 'react';
+import WelcomeView from './welcomeView.react';
+import SectionView from './sectionView.react';
+import QuestionView from './questionView.react';
+import QUESTIONS from '../data';
+import { FeqStore } from '../stores/FeqStore';
 
-function getFeqState() {
-  return {
-    showState: FeqStore.getShowState(),
-    result: {
-      scores: FeqStore.getQuestionScores()
-    }
-  };
-}
 
-var FinalView = React.createClass({
-  getInitialState: function() {
-    return getFeqState();
-  },
+export default class FinalView extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = this.getFeqState();
+  }
 
-  componentDidMount: function() {
-    FeqStore.addChangeListener(this._onChange);
-  },
+  getFeqState() {
+    return {
+      showState: FeqStore.getShowState(),
+      result: {
+        scores: FeqStore.getQuestionScores()
+      }
+    };
+  }
 
-  componentWillUnmount: function() {
-    FeqStore.removeChangeListener(this._onChange);
-  },
+  componentDidMount() {
+    FeqStore.addChangeListener(this._onChange.bind(this));
+  }
 
-  _onChange: function() {
-    this.setState(getFeqState());
-  },
+  componentWillUnmount() {
+    FeqStore.removeChangeListener(this._onChange.bind(this));
+  }
 
-  render: function() {
+  _onChange() {
+    this.setState(this.getFeqState());
+  }
+
+  render() {
     if (this.props.showState !== 'final') {
       return null;
     }
@@ -40,6 +42,4 @@ var FinalView = React.createClass({
             <h1>得分:{this.state.result.scores}</h1>
             </div>);
   }
-});
-
-module.exports = FinalView;
+};

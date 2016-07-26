@@ -1,9 +1,9 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
-var EventEmitter = require('events').EventEmitter;
-var FeqConstants = require('../constants/FeqConstants');
-var assign = require('object-assign');
-var FeqActions = require('../actions/FeqActions');
-var QUESTIONS = require('../data.js');
+import { AppDispatcher } from '../dispatcher/AppDispatcher';
+import Event from 'events';
+import { FeqConstants } from '../constants/FeqConstants';
+import assign from 'object-assign';
+import { FeqActions } from '../actions/FeqActions';
+import QUESTIONS from '../data.js';
 
 // states
 var _showState = 'welcome';
@@ -67,34 +67,33 @@ function nextSection() {
   return _sectionArr[tmp + 1].type;
 }
 
-var FeqStore = assign({}, EventEmitter.prototype, {
-
-  getShowState: function() {
+class FeqStoreClass extends Event.EventEmitter {
+  getShowState() {
     return _showState;
-  },
+  }
 
-  getQuestionNum: function() {
+  getQuestionNum() {
     return _number;
-  },
+  }
 
-  getQuestionTypeSize: function() {
+  getQuestionTypeSize() {
     for (var i = 0; i < _sectionArr.length; i++) {
       if (_sectionArr[i].type === _section) {
         return _sectionArr[i].number;
       }
     }
     return 0;
-  },
+  }
 
-  getQuestionCurrentTypeNum: function() {
+  getQuestionCurrentTypeNum() {
     return _currentTypeNumber;
-  },
+  }
 
-  getQuestionType: function() {
+  getQuestionType() {
     return QUESTIONS[_number].questionType;
-  },
+  }
 
-  getQuestionSize: function(type) {
+  getQuestionSize(type) {
     var number = 0;
     QUESTIONS.forEach(function(item) {
       if (item.questionType === QUESTIONS[_number].questionType) {
@@ -102,13 +101,13 @@ var FeqStore = assign({}, EventEmitter.prototype, {
       }
     });
     return number;
-  },
+  }
 
-  getSection: function() {
+  getSection() {
     return _section;
-  },
+  }
 
-  getCurrentSectionNum: function() {
+  getCurrentSectionNum() {
     var tmp = 0;
     for (var i = 0; i < _sectionArr.length; i++) {
       if (_section === _sectionArr[i].type) {
@@ -117,28 +116,28 @@ var FeqStore = assign({}, EventEmitter.prototype, {
       }
     }
     return tmp + 1;
-  },
+  }
 
-  getTotalSectionViewNum: function() {
+  getTotalSectionViewNum() {
     return _sectionArr.length;
-  },
+  }
 
-  getQuestionScores: function() {
+  getQuestionScores() {
     return _scores;
-  },
+  }
 
-  emitChange: function() {
+  emitChange() {
     this.emit('refresh');
-  },
+  }
 
-  addChangeListener: function(callback) {
+  addChangeListener(callback) {
     this.on('refresh', callback);
-  },
+  }
 
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener('refresh', callback);
   }
-});
+}
 
 AppDispatcher.register(function(action) {
   var text;
@@ -175,4 +174,4 @@ AppDispatcher.register(function(action) {
   FeqStore.emitChange();
 });
 
-module.exports = FeqStore;
+export const FeqStore = new FeqStoreClass();

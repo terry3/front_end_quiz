@@ -1,12 +1,12 @@
-var React = require('react');
-var FeqActions = require('../actions/FeqActions');
+import React from 'react';
+import { FeqActions } from '../actions/FeqActions';
 
-var WelcomeView = React.createClass({
-  _onClick: function() {
+export default class WelcomeView extends React.Component {
+  _onClick() {
     FeqActions.showState('section');
-  },
+  }
 
-  render: function() {
+  render() {
     if (this.props.showState !== 'welcome') {
       return null;
     }
@@ -16,6 +16,4 @@ var WelcomeView = React.createClass({
                     onClick={this._onClick}>开始</button>
             </div>);
   }
-});
-
-module.exports = WelcomeView;
+}
